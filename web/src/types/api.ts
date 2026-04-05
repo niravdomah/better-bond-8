@@ -24,6 +24,7 @@ export interface PaymentRead {
   CommissionAmount: number;
   VAT: number;
   Status: string;
+  PaymentState: string;
   BatchId?: string | null;
 }
 
