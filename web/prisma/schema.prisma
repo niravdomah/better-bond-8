@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Agency {
+  id                Int       @id @default(autoincrement())
+  agencyName        String    @unique
+  addressLine1      String
+  addressLine2      String
+  addressLine3      String
+  postalCode        String
+  bankAccountNumber String
+  branchName        String
+  branchCode        String
+  bankName          String
+  vatNumber         String
+  payments          Payment[]
+}
+
+model Payment {
+  id               Int      @id @default(autoincrement())
+  paymentId        Int      @unique
+  agencyName       String
+  batchId          String?
+  claimDate        String
+  agentName        String
+  agentSurname     String
+  commissionType   String
+  bondAmount       Float
+  commissionPct    Float
+  grantDate        String
+  regDate          String
+  bank             String
+  commissionAmount Float
+  vat              Float
+  statusCode       String
+  paymentState     String
+  invoiceFile      String?
+  lastChangedUser  String   @default("System")
+  lastChangedDate  String?
+  agency           Agency   @relation(fields: [agencyName], references: [agencyName])
+
+  paymentBatchId   Int?
+  paymentBatch     PaymentBatch? @relation(fields: [paymentBatchId], references: [id])
+}
+
+model PaymentBatch {
+  id                    Int       @id @default(autoincrement())
+  reference             String    @unique
+  createdDate           String
+  status                String
+  lastChangedUser       String
+  agencyName            String
+  totalCommissionAmount Float
+  totalVat              Float
+  payments              Payment[]
+}
