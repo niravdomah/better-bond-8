@@ -31,7 +31,11 @@ function parseDataset(): { agencies: Array<Record<string, string>>; payments: Pa
   const content = fs.readFileSync(datasetPath, "utf-8");
   const lines = content.split("\n");
 
-  const agencies: Array<Record<string, string>> = [];
+  const agencies: Array<{
+    agencyName: string; addressLine1: string; addressLine2: string;
+    addressLine3: string; postalCode: string; bankAccountNumber: string;
+    branchName: string; branchCode: string; bankName: string; vatNumber: string;
+  }> = [];
   const payments: ParsedPayment[] = [];
 
   let section = "";
